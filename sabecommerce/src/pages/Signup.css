@@ -1,0 +1,168 @@
+body{
+    justify-content: center;
+    align-items: center;
+    background-image:url(images/ethiofinal.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat:repeat-x;
+}
+.form{
+    margin: auto;
+
+  margin-top: 100px;
+  margin-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    max-width: 350px;
+    padding: 20px;
+    border-radius: 20px;
+    background-color:transparent ;
+    border-top: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    border-left: 2px solid #7aa8da;
+    border-right: 2px solid #7aa8da;
+
+   
+   
+   
+    
+overflow: hidden;
+    color: #fff;
+}
+.formm{
+
+  margin: auto;
+  margin-top: 150px;
+  margin-bottom: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  max-width: 350px;
+  padding: 20px;
+  border-radius: 20px;
+  background-color:transparent ;
+  border-top: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  border-left: 2px solid #7aa8da;
+  border-right: 2px solid #7aa8da;
+
+ 
+ 
+ 
+  
+overflow: hidden;
+  color: #fff;
+}
+input,select{
+    display: block;
+    place-content: center;
+    place-items: center;
+}
+
+.title {
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -1px;
+    display: flex;
+    align-items: center;
+    color: #7aa8da;
+  }
+  
+  .message, 
+  .signin {
+    font-size: 15.5px;
+    color:#7aa8da;
+    font-weight: 300;
+
+    text-align: center;
+  }
+   
+  
+  .message{
+    margin-top: -5px;
+  }
+  .signin a:hover {
+    text-decoration: underline royalblue;
+  }
+  
+  .signin a {
+    color:#7aa8da;
+    text-decoration: none;
+  }
+  
+  .flex {
+    display: flex;
+    width: 100%;
+    gap: 6px;
+  }
+  
+  .form label .input {
+    background-color: #333;
+    color: #fff;
+    width: 100%;
+    padding: 20px 05px 05px 10px;
+    outline: 0;
+    border: 1px solid rgba(105, 105, 105, 0.397);
+    border-radius: 10px;
+  }
+  
+  .form label .input + span {
+    color: rgba(255, 255, 255, 0.5);
+    position: absolute;
+    left: 10px;
+    top: 0px;
+    font-size: 0.9em;
+    cursor: text;
+    transition: 0.3s ease;
+  }
+  
+  
+  .form label .input:placeholder-shown + span {
+    top: 12.5px;
+    font-size: 0.9em;
+  }
+  
+  .form label .input:focus + span,
+  .form label .input:valid + span {
+    color: #fff;
+    top: 0px;
+    font-size: 0.7em;
+    font-weight: 600;
+  }
+  
+  .input {
+    font-size: medium;
+  }
+  
+  .submit {
+    border: none;
+    outline: none;
+    padding: 10px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 16px;
+    transform: .3s ease;
+    background-color: #2d2f2f;
+  }
+  
+  .submit:hover {
+    background-color: #fff;
+    color: black;
+  }
+  
+  @keyframes pulse {
+    from {
+      transform: scale(0.9);
+      opacity: 1;
+    }
+  
+    to {
+      transform: scale(1.8);
+      opacity: 0;
+    }
+  }
