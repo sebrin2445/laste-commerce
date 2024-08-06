@@ -1,12 +1,12 @@
-import dotenv from "dotenv";
-import express from "express";
-import jwt from "jsonwebtoken";
-import db from "./db.js";
-import multer from "multer";
-import fs from "fs";
-import bodyParser from "body-parser";
-import cors from "cors"
-
+const dotenv = require("dotenv");
+const express = require("express");
+const jwt = require("jsonwebtoken");
+const db = require("./db.js");
+const multer = require("multer");
+const fs = require("fs");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const path = require("path");
 
 const app = express();
 dotenv.config();
@@ -18,7 +18,8 @@ app.use(cors());
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.get("/", express.static(path.join(__dirname, "./public")));
+// app.get("/uploads", ));
+app.use(express.static( path.join(__dirname, "./public")))
 
 const uploadDir = "./public/uploads/";
 
@@ -132,6 +133,18 @@ app.get("/products", async (req, res) => {
   }
 });
 
+app.get("/search", async (req, res) => {
+  const q = req.query["keyword"];
+  const products = await db.product.findMany({
+    where: {
+      name: {
+        contains: q?.toLowerCase(),
+      },
+    },
+  });
+  return res.json({ products });
+});
+
 app.post("/products/new", upload.single("image"), async (req, res) => {
   try {
     const token = req.headers["authorization"];
@@ -142,7 +155,7 @@ app.post("/products/new", upload.single("image"), async (req, res) => {
     if (!payload) return res.status(401).json({ error: "Unauthorized" });
 
     const image = req.file;
-    const { name, location, price } = req.body;
+    const { name, location, price, catagory } = req.body;
 
     console.log(image, name);
 
@@ -153,6 +166,13 @@ app.post("/products/new", upload.single("image"), async (req, res) => {
         price: +price,
         image: `/uploads/${image.filename}`,
         user_id: payload.id,
+        ProductCatagory: catagory
+          ? {
+              create: {
+                catagory_id: +catagory,
+              },
+            }
+          : undefined,
       },
     });
 
@@ -189,7 +209,8 @@ app.get("/products/:id", async (req, res) => {
     res.status(500).end();
   }
 });
-app.get("/catagories", async (req, res) => {
+
+app.get("/ ", async (req, res) => {
   try {
     const catagories = await db.catagory.findMany();
     res.json({ catagories });

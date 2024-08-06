@@ -1,36 +1,39 @@
-// src/components/CategoryPage.jsx
+import { useQuery } from "@tanstack/react-query";
+import React from "react";
+import { useParams, useSearchParams } from "react-router-dom";
+import "./all.css";
+import axios from "axios";
 
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-
-const CategoryPage = () => {
-  const { category } = useParams();
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/products?category=${category}`);
-        setProducts(response.data);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    };
-
-    fetchProducts();
-  }, [category]);
+const Catagory = ({ category }) => {
+  const params = useParams();
+  const catagoryId = params.category;
+  const { data, status } = useQuery({
+    queryKey: ["products", catagoryId],
+    queryFn: async () => {
+      console.log(121212)
+    return await axios.get(
+        "http://localhost:5000/products?catagory=" + catagoryId,
+      );
+    },
+  });
 
   return (
-    <div>
-      <h1>{category} Products</h1>
-      <ul>
-        {products.map((product) => (
-          <li key={product._id}>{product.name}</li>
+    <div className="item-list">
+      {data &&
+        data.data.products.map((item) => (
+          <div key={item.id} className="item-card">
+            <img
+              src={"http://localhost:5000" + item.image}
+              alt={item.name}
+              className="item-image"
+            />
+            <h3>{item.name}</h3>
+            <p>{item.location}</p>
+            <p>ETB {item.price}</p>
+          </div>
         ))}
-      </ul>
     </div>
   );
 };
 
-export default CategoryPage;
+export default Catagory;

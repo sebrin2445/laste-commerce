@@ -14,6 +14,7 @@ import HealthBeauty from './pages/HealthBeauty';
 import SellPage from './components/SellPage';
 import About from './pages/About';
 import contact from './pages/contact';
+import admin from './pages/admin';
 
 import Signup from './pages/Signup';
 import Login from './pages/Login';
@@ -27,8 +28,9 @@ import {
 const queryClient = new QueryClient()
 const App = () => {
   return (
-    <AuthProvider>
 <QueryClientProvider client={queryClient}>
+
+    <AuthProvider>
 
     <Router>
       <Navbar />
@@ -47,6 +49,7 @@ const App = () => {
         <Route path="/Home" element={<HomePage />} />
         <Route path="/About" element={<About />} />
         <Route path="/contact" element={<contact />} />
+        <Route path="/admin" element={<admin />} />
 
 
         <Route path="/Signup" element={<Signup />} />
@@ -54,8 +57,9 @@ const App = () => {
       </Routes>
       <Footer />
     </Router>
-    </QueryClientProvider>
     </AuthProvider>
+    </QueryClientProvider>
+
   );
 };
 
