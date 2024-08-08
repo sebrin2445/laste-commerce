@@ -19,7 +19,7 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // app.get("/uploads", ));
-app.use(express.static( path.join(__dirname, "./public")))
+app.use(express.static(path.join(__dirname, "./public")));
 
 const uploadDir = "./public/uploads/";
 
@@ -96,11 +96,19 @@ app.post("/login", async (req, res) => {
 
 app.get("/catagories", async (req, res) => {
   try {
-    const catagories = await db.catagory.findMany();
-    res.json({ catagories });
+    const catagories = await db.catagory.findMany({
+      include: {
+        _count: {
+          select: {
+            ProductCatagory: true,
+          },
+        },
+      },
+    });
+    return res.json({ catagories });
   } catch (e) {
     console.log(e);
-    res.status(500).end();
+    return res.status(500).end();
   }
 });
 
