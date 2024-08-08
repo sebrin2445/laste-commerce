@@ -8,8 +8,14 @@ import axios from "axios";
 const HomePagee = () => {
   const [input, setInput] = useState("");
   const [keyword, setKeyWord] = useState("");
+  const { data: catagories } = useQuery({
+    queryFn: async () => {
+      const res = await axios.get("http://localhost:5000/catagories");
+      return res.data.catagories;
+    },
+  });
 
-  const { data, status } = useQuery({
+  const { data } = useQuery({
     queryKey: ["search", keyword],
     queryFn: async () =>
       axios.get("http://localhost:5000/search?keyword=" + keyword),
@@ -41,7 +47,9 @@ const HomePagee = () => {
             />
           </div>
           {data &&
-            data.data.products.map((item) => <Link key={item.id}>{item.name}</Link>)}
+            data.data.products.map((item) => (
+              <Link key={item.id}>{item.name}</Link>
+            ))}
         </section>
         <section className="ad-section">
           <div className="ad-banner">
@@ -54,42 +62,18 @@ const HomePagee = () => {
           </div>
         </section>
         <section className="categories">
-          <Link to="/vehicles" className="category vehicles">
-            <div id="cat">
-              <h3>Vehicles</h3>
-              <p>10,979 ads</p>
-            </div>
-          </Link>
-          <Link to="/property" className="category property">
-            <div id="cat">
-              <h3>Property</h3>
-              <p>13,279 ads</p>
-            </div>
-          </Link>
-          <Link to="/mobile-phones" className="category mobile-phones">
-            <div id="cat">
-              <h3>Mobile Phones & Tablets</h3>
-              <p>20,201 ads</p>
-            </div>
-          </Link>
-          <Link to="/electronics" className="category electronics">
-            <div id="cat">
-              <h3>Electronics</h3>
-              <p>121,558 ads</p>
-            </div>
-          </Link>
-          <Link to="/home-furniture" className="category home-furniture">
-            <div id="cat">
-              <h3>Home, Furniture & Appliances</h3>
-              <p>31,806 ads</p>
-            </div>
-          </Link>
-          <Link to="/health-beauty" className="category health-beauty">
-            <div id="cat">
-              <h3>Health & Beauty</h3>
-              <p>23,871 ads</p>
-            </div>
-          </Link>
+          {catagories &&
+            catagories.map((catagory) => (
+              <Link
+                to={`/catagory/${catagory.id}`}
+                className="category vehicles"
+              >
+                <div id="cat">
+                  <h3>{catagory.name}</h3>
+                  <p>{catagory._count.ProductCatagory} ads</p>
+                </div>
+              </Link>
+            ))}
         </section>
       </main>
     </div>
